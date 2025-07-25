@@ -47,7 +47,7 @@ vim.opt.splitbelow = true --split horizontal window to the bottom
 
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = ""
 
 -- clipboard
 vim.opt.clipboard:append("unnamedplus") --use system clipboard as default
@@ -58,3 +58,6 @@ vim.opt.mouse = "a"
 
 -- gets rid of line with white spaces
 vim.g.editorconfig = true
+
+-- end of line to windows
+vim.opt.fileformat = "dos"
