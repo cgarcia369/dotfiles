@@ -34,6 +34,7 @@ return {
             Color = ' ',
             Constant = ' ',
             Constructor = ' ',
+            Copilot = '',
             Enum = ' ',
             EnumMember = ' ',
             Event = ' ',
@@ -228,6 +229,7 @@ return {
             },
             -- autocompletion sources
             sources = cmp.config.sources({
+                { name = "copilot", group_index = 2 },
                 { name = "luasnip" }, -- snippets
                 { name = "lazydev" },
                 { name = "nvim_lsp"},
@@ -250,7 +252,7 @@ return {
                 -- ['<BS>'] = cmp.mapping(function(_fallback)
                 --     smart_bs()
                 -- end, { 'i', 's' }),
-
+                ["<C-g>"] = cmp.mapping.complete(),
                 ["<C-e>"] = cmp.mapping.abort(), -- close completion window
                 ['<C-d>'] = cmp.mapping(function()
                     cmp.close_docs()
@@ -274,14 +276,14 @@ return {
                     end
                 end, { 'i', 's' }),
 
-                ['<CR>'] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        local entry = cmp.get_selected_entry()
-                        confirm(entry)
-                    else
-                        fallback()
-                    end
-                end, { 'i', 's' }),
+                -- ['<CR>'] = cmp.mapping(function(fallback)
+                --     if cmp.visible() then
+                --         local entry = cmp.get_selected_entry()
+                --         confirm(entry)
+                --     else
+                --         fallback()
+                --     end
+                -- end, { 'i', 's' }),
 
                 ['<S-Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
