@@ -1,7 +1,7 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	branch = "master", -- using master to fix issues with deprecated to definition warnings 
-    -- '0.1.x' for stable ver.
+	branch = "master", -- using master to fix issues with deprecated to definition warnings
+	-- '0.1.x' for stable ver.
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -25,6 +25,20 @@ return {
 						["<C-j>"] = actions.move_selection_next,
 					},
 				},
+				file_ignore_patterns = {
+					"node_modules",
+					".git",
+					".cache",
+					".vscode",
+					".idea",
+					".DS_Store",
+					"vendor",
+					"dist",
+					"build",
+					"public",
+					"package-lock.json",
+					"templates",
+				},
 			},
 			extensions = {
 				themes = {
@@ -45,6 +59,11 @@ return {
 			builtin.grep_string({ search = word })
 		end, { desc = "Find Connected Words under cursor" })
 
-		vim.keymap.set("n", "<leader>ths", "<cmd>Telescope themes<CR>", { noremap = true, silent = true, desc = "Theme Switcher" })
-    end,
+		vim.keymap.set(
+			"n",
+			"<leader>ths",
+			"<cmd>Telescope themes<CR>",
+			{ noremap = true, silent = true, desc = "Theme Switcher" }
+		)
+	end,
 }

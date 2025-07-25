@@ -26,10 +26,47 @@ return {
             }
         end
     },
+    -- Get rid of whitespace
+    {
+        "echasnovski/mini.trailspace",
+        event = { "BufReadPost", "BufNewFile" },
+        config = function()
+            local miniTrailspace = require("mini.trailspace")
+
+            miniTrailspace.setup({
+                only_in_normal_buffers = true,
+            })
+            vim.keymap.set("n", "<leader>cw", function() miniTrailspace.trim() end, { desc = "Erase Whitespace" })
+
+            -- Ensure highlight never reappears by removing it on CursorMoved
+            vim.api.nvim_create_autocmd("CursorMoved", {
+                pattern = "*",
+                callback = function()
+                    require("mini.trailspace").unhighlight()
+                end,
+            })
+        end,
+    },
     -- File explorer (this works properly with oil unlike nvim-tree)
     {
         'echasnovski/mini.files',
         config = function()
+            vim.api.nvim_create_autocmd('User', {
+              pattern = 'MiniFilesBufferCreate',
+              callback = function(ev)
+                vim.schedule(function()
+                  vim.api.nvim_buf_set_option(0, 'buftype', 'acwrite')
+                  vim.api.nvim_buf_set_name(0, tostring(vim.api.nvim_get_current_win()))
+                  vim.api.nvim_create_autocmd('BufWriteCmd', {
+                    buffer = ev.data.buf_id,
+                    callback = function()
+                      require('mini.files').synchronize()
+                    end,
+                  })
+                end)
+              end,
+            })
+
             local MiniFiles = require("mini.files")
             MiniFiles.setup({
                 mappings = {
