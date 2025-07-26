@@ -1,7 +1,9 @@
 return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
+	enable = true,
 	dependencies = {
+		"pmizio/typescript-tools.nvim",
 		"hrsh7th/cmp-nvim-lsp",
 		-- "saghen/blink.cmp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
@@ -168,26 +170,46 @@ return {
 				client.server_capabilities.documentFormattingProvider = false
 			end,
 		})
-		-- Configure tsserver (TypeScript and JavaScript)
-		lspconfig.ts_ls.setup({
+
+		require("typescript-tools").setup({
 			capabilities = capabilities,
-			root_dir = function(fname)
-				local util = lspconfig.util
-				return not util.root_pattern("deno.json", "deno.jsonc")(fname)
-					and util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git")(fname)
-			end,
-			single_file_support = false,
 			on_attach = function(client, bufnr)
 				-- Disable formatting if you're using a separate formatter like Prettier
 				client.server_capabilities.documentFormattingProvider = false
 			end,
-			init_options = {
-				preferences = {
-					includeCompletionsWithSnippetText = true,
-					includeCompletionsForImportStatements = true,
+			settings = {
+				tsserver_max_memory = "auto",
+				separate_diagnostic_server = true,
+				expose_as_code_action = "all",
+				-- rename file with rfn
+				tsserver_plugins = {
+					-- for TypeScript v4.9+
+					"@styled/typescript-styled-plugin",
+					-- or for older TypeScript versions
+					-- "typescript-styled-plugin",
 				},
 			},
 		})
+		-- Configure tsserver (TypeScript and JavaScript)
+		-- lspconfig.ts_ls.setup({
+		-- 	capabilities = capabilities,
+		-- 	root_dir = function(fname)
+		-- 		local util = lspconfig.util
+		-- 		return not util.root_pattern("deno.json", "deno.jsonc")(fname)
+		-- 			and util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git")(fname)
+		-- 	end,
+		-- 	single_file_support = false,
+		-- 	on_attach = function(client, bufnr)
+		-- 		-- Disable formatting if you're using a separate formatter like Prettier
+		-- 		client.server_capabilities.documentFormattingProvider = false
+		-- 	end,
+		-- 	init_options = {
+		-- 		preferences = {
+		-- 			includeCompletionsWithSnippetText = true,
+		-- 			includeCompletionsForImportStatements = true,
+		-- 		},
+		-- 	},
+		-- })
 
 		-- HACK: If using Blink.cmp Configure all LSPs here
 

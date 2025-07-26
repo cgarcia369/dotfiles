@@ -100,3 +100,6 @@ vim.keymap.set("n", "<leader>cs", function()
 end, {
 	desc = "Clear strange windows chars",
 })
+
+-- Rename current file with :TSToolsRenameFile sync
+vim.keymap.set("n", "<leader>rfn", ":TSToolsRenameFile sync<CR>", { desc = "Rename current file" })
