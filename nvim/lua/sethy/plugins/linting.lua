@@ -1,5 +1,6 @@
 return {
 	"mfussenegger/nvim-lint",
+	enabled = false,
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local lint = require("lint")
@@ -27,6 +28,7 @@ return {
 			end,
 		}
 
+		-- On save, lint the file
 		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
 			group = lint_augroup,
 			callback = function()

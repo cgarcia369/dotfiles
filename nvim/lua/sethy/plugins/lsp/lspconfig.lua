@@ -165,10 +165,6 @@ return {
 		-- eslint
 		lspconfig.eslint.setup({
 			capabilities = capabilities,
-			on_attach = function(client, bufnr)
-				-- Disable formatting if you're using a separate formatter like Prettier
-				client.server_capabilities.documentFormattingProvider = false
-			end,
 		})
 
 		require("typescript-tools").setup({
@@ -210,35 +206,6 @@ return {
 		-- 		},
 		-- 	},
 		-- })
-
-		-- HACK: If using Blink.cmp Configure all LSPs here
-
-		-- ( comment the ones in mason )
-		-- local lspconfig = require("lspconfig")
-		-- local capabilities = require("blink.cmp").get_lsp_capabilities() -- Import capabilities from blink.cmp
-
-		-- Configure lua_ls
-		-- lspconfig.lua_ls.setup({
-		--     capabilities = capabilities,
-		--     settings = {
-		--         Lua = {
-		--             diagnostics = {
-		--                 globals = { "vim" },
-		--             },
-		--             completion = {
-		--                 callSnippet = "Replace",
-		--             },
-		--             workspace = {
-		--                 library = {
-		--                     [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-		--                     [vim.fn.stdpath("config") .. "/lua"] = true,
-		--                 },
-		--             },
-		--         },
-		--     },
-		-- })
-		--
-
 		-- Add other LSP servers as needed, e.g., gopls, eslint, html, etc.
 		--
 		-- lspconfig.gopls.setup({ capabilities = capabilities })
