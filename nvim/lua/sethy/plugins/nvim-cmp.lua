@@ -197,12 +197,14 @@ return {
 			end
 			cmp.confirm({ select = true, behavior = behavior })
 		end
+
 		luasnip.filetype_extend("javascript", { "html" })
 		luasnip.filetype_extend("javascriptreact", { "html" })
 		luasnip.filetype_extend("typescriptreact", { "html" })
 
 		-- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
 		require("luasnip.loaders.from_vscode").lazy_load()
+		require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath("config") .. "/snippets" } })
 
 		cmp.setup({
 			experimental = {

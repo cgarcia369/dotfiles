@@ -17,6 +17,9 @@ return {
 		-- Show test summary
 		vim.keymap.set("n", "<leader>t", ":Neotest summary<CR>", { desc = "Show test summary" })
 
+		-- Show test output
+		vim.keymap.set("n", "<leader>nto", ":Neotest output<CR>", { desc = "Show test output" })
+
 		-- Run nearest test
 		vim.keymap.set("n", "<leader>nt", function()
 			neotest.run.run()

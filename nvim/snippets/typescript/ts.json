@@ -1,0 +1,7 @@
+{
+  "reactFunctionalComponentWithType": {
+    "prefix": "fc",
+    "body": "import React from 'react';\n\ntype ${TM_FILENAME_BASE}Props = {\n\t$0\n};\n\nconst ${TM_FILENAME_BASE} = ({}: ${TM_FILENAME_BASE}Props) => {\n\treturn (\n\t\t<h1>${TM_FILENAME_BASE}</h1>\n\t);\n};\n\nexport default ${TM_FILENAME_BASE};",
+    "description": "Creates a React functional component with TypeScript type"
+  }
+}

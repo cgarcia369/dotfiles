@@ -167,6 +167,16 @@ return {
 			capabilities = capabilities,
 		})
 
+		--tailwind
+		lspconfig.tailwindcss.setup({
+			capabilities = capabilities,
+		})
+
+		--prisma
+		lspconfig.prismals.setup({
+			capabilities = capabilities,
+		})
+
 		require("typescript-tools").setup({
 			capabilities = capabilities,
 			on_attach = function(client, bufnr)
