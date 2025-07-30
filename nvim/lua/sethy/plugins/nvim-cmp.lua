@@ -232,7 +232,13 @@ return {
 			-- autocompletion sources
 			sources = cmp.config.sources({
 				{ name = "copilot" },
-				{ name = "nvim_lsp" },
+				{
+					name = "nvim_lsp",
+					entry_filter = function(entry, _ctx)
+						local kind = entry:get_kind()
+						return kind ~= cmp.lsp.CompletionItemKind.Snippet and kind ~= cmp.lsp.CompletionItemKind.Text
+					end,
+				},
 				{ name = "luasnip" }, -- snippets
 				{ name = "lazydev" },
 				{ name = "buffer" }, -- text within current buffer
@@ -359,27 +365,46 @@ return {
 		-- Only show ghost text at word boundaries, not inside keywords. Based on idea
 		-- from: https://github.com/hrsh7th/nvim-cmp/issues/2035#issuecomment-2347186210
 
-		local config = require("cmp.config")
-		local toggle_ghost_text = function()
+		-- Consolidated list of characters that should toggle ghost_text
+		local toggle_chars = {
+			'"',
+			"'",
+			"`",
+			"<",
+			">",
+			"{",
+			"}",
+			"[",
+			"]",
+			"(",
+			")",
+			" ",
+			"",
+		}
+
+		local cmp_config = require("cmp.config")
+
+		local function toggle_ghost_text()
 			if vim.api.nvim_get_mode().mode ~= "i" then
 				return
 			end
 
-			local cursor_column = vim.fn.col(".")
-			local current_line_contents = vim.fn.getline(".")
-			local character_after_cursor = current_line_contents:sub(cursor_column, cursor_column)
+			-- Get the current cursor column and line content
+			local cursor_col = vim.fn.col(".") -- Get cursor column
+			local line = vim.fn.getline(".") -- Get current line content
 
-			local should_enable_ghost_text = character_after_cursor == ""
-				or vim.fn.match(character_after_cursor, [[\k]]) == -1
+			-- Get the character after the cursor
+			local char_after = line:sub(cursor_col, cursor_col)
 
-			local current = config.get().experimental.ghost_text
-			if current ~= should_enable_ghost_text then
-				config.set_global({
-					experimental = {
-						ghost_text = should_enable_ghost_text,
-					},
-				})
-			end
+			-- Check if the character after the cursor is in the toggle list (pair characters, spaces, or end of line)
+			local should_enable_ghost_text = vim.tbl_contains(toggle_chars, char_after)
+
+			-- Enable or disable ghost_text based on the conditions
+			cmp_config.set_onetime({
+				experimental = {
+					ghost_text = should_enable_ghost_text,
+				},
+			})
 		end
 
 		vim.api.nvim_create_autocmd({ "InsertEnter", "CursorMovedI" }, {
