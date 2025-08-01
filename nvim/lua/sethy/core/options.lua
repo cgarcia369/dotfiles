@@ -61,3 +61,4 @@ vim.g.editorconfig = true
 
 -- end of line to windows
 vim.opt.fileformat = "dos"
+vim.opt.undofile = true
