@@ -231,7 +231,6 @@ return {
 			},
 			-- autocompletion sources
 			sources = cmp.config.sources({
-				{ name = "copilot" },
 				{
 					name = "nvim_lsp",
 					entry_filter = function(entry, _ctx)
@@ -239,6 +238,7 @@ return {
 						return kind ~= cmp.lsp.CompletionItemKind.Snippet and kind ~= cmp.lsp.CompletionItemKind.Text
 					end,
 				},
+				{ name = "copilot" },
 				{ name = "luasnip" }, -- snippets
 				{ name = "lazydev" },
 				{ name = "buffer" }, -- text within current buffer
