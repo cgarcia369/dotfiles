@@ -52,8 +52,8 @@ return {
 			ensure_installed = {
 				"prettier", -- prettier formatter
 				"stylua", -- lua formatter
-				"isort", -- python formatter
-				"pylint",
+				-- "isort", -- python formatter
+				-- "pylint",
 				"clangd",
 				"denols",
 				{ "eslint_d", version = "13.1.2" },
