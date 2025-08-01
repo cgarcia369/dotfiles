@@ -201,11 +201,23 @@ return {
 
 			-- Snacks Picker
 			{
+				"<leader>pq",
+				function()
+					require("snacks").picker.resume()
+				end,
+			},
+			{
 				"<leader>pf",
 				function()
-					require("snacks").picker.files()
+					require("snacks").picker.smart()
 				end,
 				desc = "Find Files (Snacks Picker)",
+			},
+			{
+				"<leader>pr",
+				function()
+					require("snacks").picker.recent()
+				end,
 			},
 			{
 				"<leader>pc",
